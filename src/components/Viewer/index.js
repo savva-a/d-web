@@ -22,17 +22,6 @@ import levenshteinDistance from '../../utils/levenshteinDistance';
 
 import './Viewer.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({
-    ...counterActions,
-    ...registerActions,
-    ...bookViewerActions,
-    ...editorActions,
-    ...libraryActions
-  }, dispatch) })
-)
-
 class Viewer extends React.Component {
 
   static inArray(currentWord, arrayWords) {
@@ -1003,4 +992,13 @@ Viewer.defaultProps = {
   }
 };
 
-export default Viewer;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({
+    ...counterActions,
+    ...registerActions,
+    ...bookViewerActions,
+    ...editorActions,
+    ...libraryActions
+  }, dispatch) })
+)(Viewer);

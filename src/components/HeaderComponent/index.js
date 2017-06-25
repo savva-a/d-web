@@ -13,11 +13,6 @@ import './HeaderComponent.scss';
 
 const FontAwesome = require('react-fontawesome');
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
-)
-
 class HeaderComponent extends React.Component {
 
   static back() {
@@ -65,4 +60,7 @@ HeaderComponent.defaultProps = {
   imgName: undefined,
 };
 
-export default HeaderComponent;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
+)(HeaderComponent);

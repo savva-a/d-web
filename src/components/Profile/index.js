@@ -25,17 +25,6 @@ import API from '../../client-api';
 
 import './Profile.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({
-    ...authActions,
-    // ...configActions,
-    // ...registerActions,
-    // ...bookViewerActions,
-    // ...libraryActions
-  }, dispatch) })
-)
-
 class Profile extends React.Component {
   constructor(props) {
     super(props);
@@ -277,4 +266,13 @@ Profile.defaultProps = {
   },
 };
 
-export default Profile;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({
+    ...authActions,
+    // ...configActions,
+    // ...registerActions,
+    // ...bookViewerActions,
+    // ...libraryActions
+  }, dispatch) })
+)(Profile);

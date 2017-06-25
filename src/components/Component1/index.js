@@ -15,11 +15,6 @@ import FooterComponent from '../FooterComponent';
 const FontAwesome = require('react-fontawesome');
 
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
-)
-
 class Component1 extends React.Component {
   constructor(props) {
     super(props);
@@ -65,4 +60,7 @@ Component1.defaultProps = {
   actions: {}
 };
 
-export default Component1;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
+)(Component1);

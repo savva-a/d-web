@@ -18,13 +18,6 @@ import Storage from '../../Storage';
 
 import './LoginModal.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({
-    ...authActions,
-    ...configActions }, dispatch) })
-)
-
 class LoginModal extends React.Component {
 
   constructor(props) {
@@ -162,4 +155,9 @@ LoginModal.defaultProps = {
   auth: { session: '' }
 };
 
-export default LoginModal;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({
+    ...authActions,
+    ...configActions }, dispatch) })
+)(LoginModal);

@@ -19,11 +19,6 @@ import FooterInfoComponent from '../FooterInfoComponent';
 
 import './Faq.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
-)
-
 class Faq extends React.Component {
 
   constructor(props) {
@@ -104,4 +99,7 @@ Faq.defaultProps = {
   config: { appLanguage: 'en' }
 };
 
-export default Faq;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
+)(Faq);

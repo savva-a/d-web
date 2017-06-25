@@ -14,13 +14,6 @@ import staticImages from '../../staticImages';
 
 import './UserLvlModal.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({
-    ...authActions,
-    ...configActions }, dispatch) })
-)
-
 class UserLvlModal extends React.Component {
 
   constructor(props) {
@@ -93,4 +86,9 @@ UserLvlModal.defaultProps = {
   auth: { session: '' }
 };
 
-export default UserLvlModal;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({
+    ...authActions,
+    ...configActions }, dispatch) })
+)(UserLvlModal);

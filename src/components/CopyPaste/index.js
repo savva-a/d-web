@@ -15,11 +15,6 @@ import staticImages from '../../staticImages';
 
 import './CopyPaste.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
-)
-
 class CopyPaste extends React.Component {
   constructor(props) {
     super(props);
@@ -69,4 +64,7 @@ CopyPaste.defaultProps = {
   actions: {}
 };
 
-export default CopyPaste;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
+)(CopyPaste);

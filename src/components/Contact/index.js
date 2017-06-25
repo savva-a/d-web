@@ -19,11 +19,6 @@ import staticImages from '../../staticImages';
 
 import './Contact.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
-)
-
 class Contact extends React.Component {
 
   constructor(props) {
@@ -65,4 +60,7 @@ Contact.defaultProps = {
   config: { appLanguage: 'en' }
 };
 
-export default Contact;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
+)(Contact)

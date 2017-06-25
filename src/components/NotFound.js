@@ -9,11 +9,6 @@ import * as registerActions from '../redux/register';
 import HeaderComponent from './HeaderComponent';
 // import './Component1.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
-)
-
 class NotFound extends React.Component {
   constructor(props) {
     super(props);
@@ -52,4 +47,7 @@ NotFound.defaultProps = {
   actions: {}
 };
 
-export default NotFound;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
+)(NotFound);

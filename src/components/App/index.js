@@ -21,13 +21,6 @@ import Storage from '../../Storage';
 
 import './App.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({
-    ...authActions,
-    ...configActions }, dispatch) })
-)
-
 class App extends React.Component {
 
   constructor(props) {
@@ -250,4 +243,10 @@ App.defaultProps = {
   auth: { session: '' }
 };
 
-export default App;
+
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({
+    ...authActions,
+    ...configActions }, dispatch) })
+)(App);

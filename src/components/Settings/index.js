@@ -25,16 +25,6 @@ import staticImages from '../../staticImages';
 
 import './Settings.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({
-    ...configActions,
-    ...registerActions,
-    ...bookViewerActions,
-    ...libraryActions
-  }, dispatch) })
-)
-
 class Settings extends React.Component {
   constructor(props) {
     super(props);
@@ -148,4 +138,12 @@ Settings.defaultProps = {
   },
 };
 
-export default Settings;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({
+    ...configActions,
+    ...registerActions,
+    ...bookViewerActions,
+    ...libraryActions
+  }, dispatch) })
+)(Settings);

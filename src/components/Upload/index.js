@@ -21,11 +21,6 @@ import API from '../../client-api';
 
 import './Upload.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
-)
-
 class Upload extends React.Component {
   constructor(props) {
     super(props);
@@ -143,4 +138,7 @@ Upload.defaultProps = {
   config: { appLanguage: 'en' }
 };
 
-export default Upload;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
+)(Upload);

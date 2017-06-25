@@ -6,13 +6,7 @@ import API from '../../client-api';
 import Storage from '../../Storage';
 import * as actionsAuth from '../../redux/auth';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({
-    ...actionsAuth,
-  }, dispatch) })
-)
-export default class SessionService extends React.Component {
+class SessionService extends React.Component {
 
   constructor() {
     super();
@@ -63,3 +57,10 @@ SessionService.defaultProps = {
   actions: {},
   children: {}
 };
+
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({
+    ...actionsAuth,
+  }, dispatch) })
+)(SessionService);

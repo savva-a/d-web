@@ -20,11 +20,6 @@ import staticImages from '../../staticImages';
 
 import './HomePage.scss';
 
-@connect(
-  state => ({ ...state }),
-  // dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
-)
-
 class HomePage extends React.Component {
 
   static libraryClick() {
@@ -156,4 +151,7 @@ HomePage.defaultProps = {
   config: { appLanguage: 'en' }
 };
 
-export default HomePage;
+export default connect(
+  state => ({ ...state }),
+  // dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
+)(HomePage);

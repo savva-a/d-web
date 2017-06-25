@@ -15,11 +15,6 @@ import words from '../../words';
 
 import './FooterInfoComponent.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({ ...editorActions }, dispatch) })
-)
-
 class FooterInfoComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -78,4 +73,7 @@ FooterInfoComponent.defaultProps = {
   config: { appLanguage: 'en' }
 };
 
-export default FooterInfoComponent;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({ ...editorActions }, dispatch) })
+)(FooterInfoComponent);

@@ -18,11 +18,6 @@ import staticImages from '../../staticImages';
 
 import './Terms.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
-)
-
 class Terms extends React.Component {
 
   constructor(props) {
@@ -121,4 +116,7 @@ Terms.defaultProps = {
   config: { appLanguage: 'en' }
 };
 
-export default Terms;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
+)(Terms);

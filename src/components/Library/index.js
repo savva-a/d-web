@@ -22,16 +22,6 @@ import API from '../../client-api';
 
 import './Library.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({
-    ...counterActions,
-    ...registerActions,
-    ...bookViewerActions,
-    ...libraryActions
-  }, dispatch) })
-)
-
 class Library extends React.Component {
   constructor(props) {
     super(props);
@@ -149,4 +139,12 @@ Library.defaultProps = {
   }
 };
 
-export default Library;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({
+    ...counterActions,
+    ...registerActions,
+    ...bookViewerActions,
+    ...libraryActions
+  }, dispatch) })
+)(Library);

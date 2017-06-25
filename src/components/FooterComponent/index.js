@@ -13,11 +13,6 @@ import CustomPopover from '../CustomPopover';
 
 import './FooterComponent.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({ ...editorActions }, dispatch) })
-)
-
 class FooterComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -267,4 +262,7 @@ FooterComponent.defaultProps = {
   config: { appLanguage: 'en' }
 };
 
-export default FooterComponent;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({ ...editorActions }, dispatch) })
+)(FooterComponent);

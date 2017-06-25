@@ -12,10 +12,7 @@ import API from '../client-api';
 
 // import './Component1.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
-)
+
 
 class Component2 extends React.Component {
   constructor(props) {
@@ -29,32 +26,32 @@ class Component2 extends React.Component {
 
   componentDidMount() {
     // const submitButton = document.querySelector('#submit-button');
-    const submitButton = this.submitBtn;
+    // const submitButton = this.submitBtn;
 
     API.call('checkout/getClientToken', {})
     .then((res) => {
       console.log(777, res.data.clientToken);
 
-      braintree.dropin.create({
-        authorization: res.data.clientToken, // 'CLIENT_AUTHORIZATION',
-        selector: '#dropin-container'
-      }, function (err, dropinInstance) {
-        console.log('lsdjhfg 777777', dropinInstance);
-        submitButton.addEventListener('click', function () {
-          dropinInstance.requestPaymentMethod(function (err, payload) {
-            if (err) {
-              // Handle errors in requesting payment method
-              // This includes invalid card form or no payment method available
-              // Errors relevant to customers will be show in the UI as well
-
-              return;
-            }
-            console.log('payload', payload);
-            console.log('Send payload.nonce to your server');
-            // Send payload.nonce to your server
-          });
-        });
-      });
+      // braintree.dropin.create({
+      //   authorization: res.data.clientToken, // 'CLIENT_AUTHORIZATION',
+      //   selector: '#dropin-container'
+      // }, function (err, dropinInstance) {
+      //   console.log('lsdjhfg 777777', dropinInstance);
+      //   submitButton.addEventListener('click', function () {
+      //     dropinInstance.requestPaymentMethod(function (err, payload) {
+      //       if (err) {
+      //         // Handle errors in requesting payment method
+      //         // This includes invalid card form or no payment method available
+      //         // Errors relevant to customers will be show in the UI as well
+      //
+      //         return;
+      //       }
+      //       console.log('payload', payload);
+      //       console.log('Send payload.nonce to your server');
+      //       // Send payload.nonce to your server
+      //     });
+      //   });
+      // });
     });
   }
 
@@ -97,4 +94,7 @@ Component2.defaultProps = {
   actions: {}
 };
 
-export default Component2;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
+)(Component2);

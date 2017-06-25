@@ -21,16 +21,6 @@ import API from '../../client-api';
 
 import './Editor.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({
-    ...counterActions,
-    ...registerActions,
-    ...libraryActions,
-    ...editorActions
-  }, dispatch) })
-)
-
 class Editor extends React.Component {
   constructor(props) {
     super(props);
@@ -179,4 +169,12 @@ Editor.defaultProps = {
   }
 };
 
-export default Editor;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({
+    ...counterActions,
+    ...registerActions,
+    ...libraryActions,
+    ...editorActions
+  }, dispatch) })
+)(Editor);

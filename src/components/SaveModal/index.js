@@ -22,15 +22,7 @@ import API from '../../client-api';
 
 import './SaveModal.scss';
 
-@connect(
-  state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({
-    ...counterActions,
-    ...registerActions,
-    ...libraryActions,
-    ...editorActions
-  }, dispatch) })
-)
+
 
 class SaveModal extends React.Component {
   constructor(props) {
@@ -144,4 +136,12 @@ SaveModal.defaultProps = {
   }
 };
 
-export default SaveModal;
+export default connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({
+    ...counterActions,
+    ...registerActions,
+    ...libraryActions,
+    ...editorActions
+  }, dispatch) })
+)(SaveModal);
