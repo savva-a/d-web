@@ -1,0 +1,24 @@
+.library-page {
+  margin: 0 0 auto 0;
+}
+.icon {
+  color: #e2e2e2;
+}
+.book-title {
+  color: #787878;
+}
+.table-striped>tbody>tr {
+  border: 0px;
+  td {
+    border: 0px;
+    line-height: 2em;
+    padding-left: 40px;
+  }
+}
+.table-striped>tbody>tr:nth-of-type(odd){
+  // background-color: #f9f9f9;
+  background-color: #e2e2e2 !important;
+  .icon {
+    color: #ffffff;
+  }
+}

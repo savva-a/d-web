@@ -1,0 +1,72 @@
+import React from 'react';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Link, browserHistory } from 'react-router';
+
+
+import * as counterActions from '../../redux/counter';
+import * as registerActions from '../../redux/register';
+
+import HeaderComponent from '../HeaderComponent';
+import FooterComponent from '../FooterComponent';
+
+import staticImages from '../../staticImages';
+
+import './Upload.scss';
+
+@connect(
+  state => ({ ...state }),
+  dispatch => ({ actions: bindActionCreators({ ...counterActions, ...registerActions }, dispatch) })
+)
+
+class Upload extends React.Component {
+  constructor(props) {
+    super(props);
+    this.libraryClick = this.libraryClick.bind(this);
+    this.copyPasteClick = this.copyPasteClick.bind(this);
+    this.uploadClick = this.uploadClick.bind(this);
+    this.state = {
+      a: 1
+    };
+  }
+
+  libraryClick() {
+    console.log('1 STATE', this.state); // eslint-disable-line
+    browserHistory.push('/library');
+  }
+
+  copyPasteClick() {
+    console.log('2 STATE', this.state); // eslint-disable-line
+    browserHistory.push('/copyPaste');
+  }
+
+  uploadClick() {
+    console.log('3 STATE', this.state); // eslint-disable-line
+    browserHistory.push('/upload');
+  }
+
+  render() {
+    return (
+      <div className="component-container">
+        <HeaderComponent iconName="book" show />
+        <div className="upload-page">
+          UPLOAD
+        </div>
+        <FooterComponent />
+      </div>
+    );
+  }
+}
+
+Upload.propTypes = {
+  actions: React.PropTypes.shape({
+    increment: React.PropTypes.func,
+    addRegisterData: React.PropTypes.func
+  })
+};
+Upload.defaultProps = {
+  actions: {}
+};
+
+export default Upload;

@@ -1,0 +1,16 @@
+.sec-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: #777777;
+  height: 40px;
+  span {
+    cursor: pointer;
+    color: black;
+    margin: 0 7px;
+  }
+  .center-icon {
+    margin: 0 auto;
+  }
+}
