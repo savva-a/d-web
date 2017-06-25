@@ -2,5 +2,9 @@
   margin: auto;
   .central-img {
     margin: 0 7px;
+    cursor: pointer;
   }
+}
+.component-container.grey-page {
+  background-color: rgba(0, 0, 0, 0.498039);
 }

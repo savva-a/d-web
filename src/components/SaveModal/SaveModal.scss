@@ -1,0 +1,39 @@
+.edit-page {
+  margin: 0 0 auto 0;
+  overflow: auto;
+  .editor-textarea {
+    width: 100%;
+    margin: 0px;
+    height: calc(100vh - 160px);
+    overflow-x: hidden;
+    outline: none;
+  }
+}
+.modal-dialog {
+  max-width: 350px;
+  margin-top: 100px;
+}
+.text-save-modal {
+  background-color: #FCB632;
+  border: 3px solid #C88F28;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  .text-save-modal__close {
+    align-self: flex-end;
+  }
+  .text-save-modal__title {
+    font-size: 30px;
+    color: #FCB632;
+    text-shadow: 1px 1px 2px black, 0 0 1px black;
+    margin: 0 auto 30px;
+  }
+  .text-save-modal__input {
+    margin: 20px 0;
+  }
+  .text-save-modal__submit {
+    margin: 0 auto 10px;
+    cursor: pointer;
+  }
+}

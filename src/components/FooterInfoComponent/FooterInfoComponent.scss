@@ -1,0 +1,20 @@
+.bottom-info-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  // justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+  justify-content: space-around;
+  background: white;
+  border-top: 2px solid #C3C3C3;
+  // background: #FA9E09;
+  min-height: 80px;
+  .footer-info-text {
+    font-size: 10px;
+  }
+  .footer-info-doobee-logo {
+    height: 60px;
+    object-fit: cover;
+  }
+}

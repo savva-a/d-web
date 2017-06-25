@@ -1,0 +1,9 @@
+.terms-page {
+  margin: 0 0 auto 0;
+  overflow: auto;
+  .terms-picture {
+    object-fit: cover;
+    width: 100%;
+    margin-bottom: 25px;
+  }
+}

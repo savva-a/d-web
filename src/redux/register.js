@@ -6,11 +6,12 @@ const TYPE = {
   ADD_REGISTER_DATA_CONTINUE: 'ADD_REGISTER_DATA_CONTINUE'
 };
 
-export let addRegisterData = (data) => ({
+export const addRegisterData = data => ({
   type: TYPE.ADD_REGISTER_DATA,
   data
 });
-export let addRegisterDataContinue = (data) => ({
+
+export const addRegisterDataContinue = data => ({
   type: TYPE.ADD_REGISTER_DATA_CONTINUE,
   data
 });
@@ -20,7 +21,7 @@ const initialState = {
 };
 
 export default (_state = initialState, action = {}) => {
-  let state = {..._state};
+  const state = { ..._state };
   switch (action.type) {
     case TYPE.ADD_REGISTER_DATA:
       return {

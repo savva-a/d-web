@@ -1,0 +1,77 @@
+.login-modal-dialog {
+      position: absolute;
+      right: calc(((100% - 1050px) / 2) + 50px);
+      top: -25px;
+     }
+.login-modal-dialog>.modal-content {
+  border-left: solid 20px white;
+  border-top: solid 20px white;
+  border-bottom: solid 20px white;
+  border-right-width: 0;
+  height: 280px;
+  background-image: url('../../img/unlock-grey.png');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-origin: padding-box;
+  border-radius: 0px;
+}
+.login-modal-dialog::before {
+  content: '';
+  z-index: 10;
+  position: absolute; /* Абсолютное позиционирование */
+  top: -54px; right: 32px; /* Положение треугольника */
+  border: 15px solid transparent; /* Прозрачные границы */
+  border-bottom: 40px solid white; /* Добавляем треугольник */
+}
+.login-modal-close {
+  // margin: 0px;
+  height: 30px;
+  width: 30px;
+}
+.login-modal-input {
+  width: 100%;
+  // width: 260px;
+  line-height: 40px;
+  height: 40px;
+  margin: 20px 0px;
+  background: rgba(251, 197, 84, 0.8);
+  border: none;
+  font-size: 30px;
+}
+.login-modal-input.password {
+  margin-bottom: 0px;
+}
+.login-modal-input::-webkit-input-placeholder {
+  color: rgb(100, 100, 100);
+}
+.login-modal-input:focus {
+    outline: none;
+}
+
+.login-modal-forgot-label {
+  font-size: 20px;
+  margin-left: auto;
+  color: #BBBBBB;
+}
+.login-btn {
+  background-color: #2EA003;
+  margin: 0px 0px 0px auto;
+  border: #DDDFE1 2px solid;
+  color: white;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  text-transform: uppercase;
+  font-size: 18px;
+  height: 35px;
+  padding: 0 15px;
+}
+.login-btn.logout-btn {
+  background-color: #2EA003;
+  margin-top: 160px;
+  margin-left: 100px;
+}
+.login-btn-label {
+  font-size: 18px;
+  line-height: 35px;
+}

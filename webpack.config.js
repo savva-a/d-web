@@ -2,15 +2,10 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// const autoprefixer = require('autoprefixer');
-
 module.exports = {
   devtool: 'eval-source-map',
   context: __dirname,
   entry: [
-    // 'react-hot-loader/patch',
-    // 'webpack-dev-server/client?http://0.0.0.0:8000',
-    // 'webpack/hot/only-dev-server',
     './src/webpack-public-path',
     path.resolve(__dirname, './src/index.js')
   ],
@@ -18,16 +13,7 @@ module.exports = {
     path: path.join(__dirname, 'public'),
     filename: 'bundle.js',
     publicPath: '/'
-    // filename: '[name].js'
   },
-
-  // devServer: {
-  //   // colors: true,
-  //   historyApiFallback: true,
-  //   inline: false,
-  //   port: 8000,
-  //   hot: true
-  // },
 
   module: {
     loaders: [
@@ -71,13 +57,8 @@ module.exports = {
     ]
   },
 
-  // postcss: function() {
-  //   return [autoprefixer];
-  // },
-
   plugins: [
     new webpack.LoaderOptionsPlugin({
-     // test: /\.xxx$/, // may apply this only for some modules
       options: {
         sassLoader: {
           includePaths: [path.resolve(__dirname, './src')]

@@ -41,7 +41,7 @@ class Component1 extends React.Component {
   render() {
     return (
       <div className="component1">
-        <HeaderComponent iconName="book" show />
+        <HeaderComponent imgName="openBookWhite" show />
         <div style={{ margin: 'auto 0' }}>
           Template ReactJS Component1
           <p className="some">component 1</p>

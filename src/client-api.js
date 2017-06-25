@@ -1,7 +1,8 @@
 const API = {
 
   config: {
-    host: 'http://localhost:3001'
+    host: 'http://78.47.198.115:3001'
+    // host: 'http://localhost:3001'
   },
 
   call(path, data) {

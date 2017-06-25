@@ -3,19 +3,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { Overlay, OverlayTrigger } from 'react-bootstrap';
-import FontAwesome from 'react-fontawesome';
+import { Overlay, OverlayTrigger, Image } from 'react-bootstrap';
 
-import * as counterActions from '../../redux/counter';
+import * as editorActions from '../../redux/editor';
 
 import words from '../../words';
+import staticImages from '../../staticImages';
 import CustomPopover from '../CustomPopover';
 
 import './FooterComponent.scss';
 
 @connect(
   state => ({ ...state }),
-  dispatch => ({ actions: bindActionCreators({ ...counterActions }, dispatch) })
+  dispatch => ({ actions: bindActionCreators({ ...editorActions }, dispatch) })
 )
 
 class FooterComponent extends React.Component {
@@ -80,61 +80,190 @@ class FooterComponent extends React.Component {
     );
 
     return (
-      <div className="bottom-bar">
+      <div className={this.props.inactive ? 'bottom-bar inactive' : 'bottom-bar'}>
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-          <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={userSkillPopover}>
-            <FontAwesome
-              name="question-circle"
-              size="lg"
-              onClick={() => { console.log('show modal with info'); }}
-              className="pointer"
+          <OverlayTrigger
+            trigger={['hover', 'focus']}
+            placement="top"
+            overlay={userSkillPopover}
+            delayShow={0}
+            delayHide={0}
+          >
+            <Image
+              src={staticImages.bottomQuestion}
+              height="20"
+              alt="bottomQuestion"
+              onClick={this.props.showUserLvlModal}
+              className="pointer bottom-bar-img"
             />
+
           </OverlayTrigger>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <input type="range" />
-            <input type="range" />
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <img src={staticImages.starEmpty} alt="emptyStar" className="userlevel-star" />
+            <div
+              onClick={this.props.decreaseUserLevel}
+              className="userlevel-arrow"
+            > ◄ </div>
+            <input
+              className="user-level"
+              type="range"
+              max={100}
+              min={0}
+              step={1}
+              // defaultValue={0.7}
+              value={this.props.userLevelValue}
+              onChange={this.props.setUserLevel}
+            />
+            <div
+              onClick={this.props.increaseUserLevel}
+              className="userlevel-arrow"
+            > ► </div>
+            <img src={staticImages.star} alt="emptyStar" className="userlevel-star" />
           </div>
         </div>
-        <div>
-          <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={speechToTextPopover}>
-            <FontAwesome name="comment" fixedWidth size="3x" onClick={() => {}} className="pointer" />
+        <div className="bottom-bar-controls">
+          <OverlayTrigger
+            trigger={['hover', 'focus']}
+            placement="top"
+            overlay={speechToTextPopover}
+            delayShow={0}
+            delayHide={0}
+          >
+            <Image
+              src={this.props.sttIsActive ? staticImages.bottomSttOn : staticImages.bottomSttOff}
+              height="60"
+              alt="bottomSttOff"
+              onClick={this.props.active ? this.props.speechToText : () => {}}
+              className="pointer bottom-bar-img"
+            />
           </OverlayTrigger>
-          <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={nextLinePopover}>
-            <FontAwesome name="arrow-circle-o-down" fixedWidth size="3x" onClick={() => {}} className="pointer" />
+
+          <OverlayTrigger
+            trigger={['hover', 'focus']}
+            placement="top"
+            overlay={nextLinePopover}
+            delayShow={0}
+            delayHide={0}
+          >
+            <Image
+              src={staticImages.bottomNext}
+              height="60" alt="bottomNext"
+              onClick={this.props.active ? this.props.nextSentence : () => {}}
+              className="pointer bottom-bar-img"
+            />
           </OverlayTrigger>
-          <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={prevLinePopover}>
-            <FontAwesome name="arrow-circle-o-up" fixedWidth size="3x" onClick={() => {}} className="pointer" />
+
+          <OverlayTrigger
+            trigger={['hover', 'focus']}
+            placement="top"
+            overlay={prevLinePopover}
+            delayShow={0}
+            delayHide={0}
+          >
+            <Image
+              src={staticImages.bottomPrev}
+              height="60"
+              alt="bottomPrev"
+              onClick={this.props.active ? this.props.prevSentence : () => {}}
+              className="pointer bottom-bar-img"
+            />
           </OverlayTrigger>
-          <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={hearTextPopover}>
-            <FontAwesome name="headphones" fixedWidth size="3x" onClick={() => {}} className="pointer" />
+
+          <OverlayTrigger
+            trigger={['hover', 'focus']}
+            placement="top"
+            overlay={hearTextPopover}
+            delayShow={0}
+            delayHide={0}
+          >
+            <Image
+              src={this.props.ttsIsActive ? staticImages.bottomTtsOn : staticImages.bottomTtsOff}
+              height="60"
+              alt="bottomTtsOff"
+              onClick={this.props.active ? this.props.textToSpeech : () => {}}
+              className="pointer bottom-bar-img"
+            />
           </OverlayTrigger>
-          <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={saveTextPopover}>
-            <FontAwesome name="floppy-o" fixedWidth size="3x" onClick={() => {}} className="pointer" />
+
+          <OverlayTrigger
+            trigger={['hover', 'focus']}
+            placement="top"
+            overlay={saveTextPopover}
+            delayShow={0}
+            delayHide={0}
+          >
+            <Image
+              src={staticImages.bottomSave}
+              height="60"
+              alt="bottomSave"
+              onClick={this.props.active || this.props.activeSave ? this.props.saveText : () => {}}
+              className="pointer bottom-bar-img"
+            />
           </OverlayTrigger>
-          <OverlayTrigger trigger={['hover', 'focus']} placement="top" overlay={feedbackPopover}>
-            <FontAwesome name="retweet" fixedWidth flip="horizontal" size="3x" onClick={() => {}} className="pointer" />
+
+          <OverlayTrigger
+            trigger={['hover', 'focus']}
+            placement="top"
+            overlay={feedbackPopover}
+            delayShow={0}
+            delayHide={0}
+          >
+            <Image
+              src={this.props.feedbackIsActive ? staticImages.bottomFeedbackGeen : staticImages.bottomFeedback}
+              height="60"
+              alt="bottomFeedback"
+              onClick={this.props.active ? this.props.feedback : () => {}}
+              className="pointer bottom-bar-img"
+            />
           </OverlayTrigger>
         </div>
-        <div>
-          <FontAwesome name="database" fixedWidth flip="horizontal" size="3x" onClick={() => {}} className="pointer" />
-          DB
-        </div>
+        <img src={staticImages.doobee3} height="60" alt="DooBee logo" className="bottom-bar-logo" />
       </div>
     );
   }
 }
 
 FooterComponent.propTypes = {
-  actions: React.PropTypes.shape({
-    increment: React.PropTypes.func
-  }),
+  active: React.PropTypes.bool,
+  activeSave: React.PropTypes.bool,
+  saveText: React.PropTypes.func,
+  sttIsActive: React.PropTypes.bool,
+  ttsIsActive: React.PropTypes.bool,
+  feedbackIsActive: React.PropTypes.bool,
+  inactive: React.PropTypes.bool,
+  speechToText: React.PropTypes.func,
+  textToSpeech: React.PropTypes.func,
+  prevSentence: React.PropTypes.func,
+  nextSentence: React.PropTypes.func,
+  feedback: React.PropTypes.func,
+  showUserLvlModal: React.PropTypes.func,
+  setUserLevel: React.PropTypes.func,
+  decreaseUserLevel: React.PropTypes.func,
+  increaseUserLevel: React.PropTypes.func,
+  userLevelValue: React.PropTypes.number,
   config: React.PropTypes.shape({
     appLanguage: React.PropTypes.string.isRequred
   })
 };
 FooterComponent.defaultProps = {
-  active: true,
+  active: false,
+  activeSave: false,
   actions: {},
+  speechToText: () => {},
+  saveText: () => {},
+  textToSpeech: () => {},
+  prevSentence: () => {},
+  nextSentence: () => {},
+  feedback: () => {},
+  showUserLvlModal: () => {},
+  setUserLevel: () => {},
+  decreaseUserLevel: () => {},
+  increaseUserLevel: () => {},
+  userLevelValue: 50,
+  sttIsActive: false,
+  ttsIsActive: false,
+  feedbackIsActive: false,
+  inactive: false,
   config: { appLanguage: 'en' }
 };
 

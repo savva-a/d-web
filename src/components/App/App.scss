@@ -7,7 +7,13 @@ body {
   margin: 0;
   height: 100%;
 }
-
+#container {
+  background-color: rgb(250, 250, 250);  
+}
+.container {
+    width: 1050px;
+    background-color: white;
+}
 .component-container {
   height: calc(100vh - #{$navbar-height});
   display: flex;
@@ -21,12 +27,20 @@ body {
   cursor: pointer;
 }
 
+.top-bar-img {
+  padding: 0 8px 2px;
+}
 .NavBar.horizontal {
   background-color: black;
   font-size: 20px;
   display: flex;
   flex-direction: row;
+  align-items: center;
   height: $navbar-height;
+  .navbar-toolbar {
+    display: flex;
+    align-items: center;
+  }
   .nav-icon {
     color: #e2e2e2;
   }
@@ -34,4 +48,3 @@ body {
     padding: 0px !important;
   }
 }
-// @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css');

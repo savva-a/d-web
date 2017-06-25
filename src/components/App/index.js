@@ -5,28 +5,26 @@ import { bindActionCreators } from 'redux';
 
 import { browserHistory } from 'react-router';
 
-import { Grid, Row, ButtonToolbar, DropdownButton, MenuItem, Overlay } from 'react-bootstrap';
+import { Grid, Row, ButtonToolbar, DropdownButton, MenuItem, Overlay, OverlayTrigger, Image } from 'react-bootstrap';
 
-import FontAwesome from 'react-fontawesome';
-
-import * as counterActions from '../../redux/counter';
-import * as registerActions from '../../redux/register';
+import * as authActions from '../../redux/auth';
 import * as configActions from '../../redux/config';
 
 import words from '../../words';
+import staticImages from '../../staticImages';
+import API from '../../client-api';
 
-
+import SessionService from '../SessionService';
 import CustomPopover from '../CustomPopover';
-
-// import mergeDeep from '../../utils/mergeDeep';
+import LoginModal from '../LoginModal';
+import Storage from '../../Storage';
 
 import './App.scss';
 
 @connect(
   state => ({ ...state }),
   dispatch => ({ actions: bindActionCreators({
-    ...counterActions,
-    ...registerActions,
+    ...authActions,
     ...configActions }, dispatch) })
 )
 
@@ -37,8 +35,10 @@ class App extends React.Component {
     this.togglePopover = this.togglePopover.bind(this);
     this.renderOverlay = this.renderOverlay.bind(this);
     this.renderNavIcon = this.renderNavIcon.bind(this);
+    this.closeLoginModal = this.closeLoginModal.bind(this);
     this.state = {
       popoversShow: {
+        showLoginModal: true,
         languagePopover: false,
         home: false,
         login: false,
@@ -48,6 +48,25 @@ class App extends React.Component {
     };
   }
 
+  componentWillMount() {
+    const session = Storage.get('session');
+    if (session) {
+      API.call('user/check', {
+        session
+      }).then((_result) => {
+        const result = _result;
+        result.data.session = session;
+        this.props.actions.userAuth({ ...result.data });
+      });
+    }
+  }
+
+  closeLoginModal() {
+    this.setState({
+      showLoginModal: false
+    });
+  }
+
   togglePopover(targetName, value) {
     const state = this.state;
     state.popoversShow[targetName] = value;
@@ -55,20 +74,30 @@ class App extends React.Component {
   }
 
   renderNavIcon(ref, name, route, style) {
-    // const spanStyle = {
-    //   margin: ' 5px'
-    // };
     return (
-      // <span style={mergeDeep(spanStyle, style)}>
-      <span
-        style={style}
-        className="nav-icon pointer"
-        ref={(c) => { this[ref] = c; }}
-        onMouseOver={() => { this.togglePopover(ref, true); }}
-        onMouseLeave={() => { this.togglePopover(ref, false); }}
+      <OverlayTrigger
+        trigger={['hover', 'focus']}
+        placement="bottom"
+        overlay={ref}
+        delayShow={0}
+        delayHide={0}
       >
-        <FontAwesome name={name} fixedWidth size="lg" onClick={() => { browserHistory.push(route); }} />
-      </span>
+        <span
+          style={style}
+          className="nav-icon pointer"
+          ref={(c) => { this[ref] = c; }}
+          onMouseOver={() => { this.togglePopover(ref, true); }}
+          onMouseLeave={() => { this.togglePopover(ref, false); }}
+        >
+          <Image
+            src={staticImages[name]}
+            height="25"
+            onClick={() => { browserHistory.push(route); }}
+            alt={name}
+            className="top-bar-img"
+          />
+        </span>
+      </OverlayTrigger>
     );
   }
 
@@ -88,48 +117,113 @@ class App extends React.Component {
 
   render() {
     const LN = this.props.config.appLanguage;
+
+    const languagePopover = (
+      <CustomPopover text={words.languagePopover[LN]} />
+    );
+    const homePopover = (
+      <CustomPopover text={words.homePopover[LN]} />
+    );
+    const libraryPopover = (
+      <CustomPopover text={words.libraryPopover[LN]} />
+    );
+    const settingsPopover = (
+      <CustomPopover text={words.settingsPopover[LN]} />
+    );
+    const loginPopover = (
+      <CustomPopover text={words.loginPopover[LN]} />
+    );
+    const userProfilePopover = (
+      <CustomPopover text={words.userProfilePopover[LN]} />
+    );
+    const shoppingCartPopover = (
+      <CustomPopover text={words.shoppingCartPopover[LN]} />
+    );
     return (
-      <Grid fluid>
+      <Grid>
         <Row className="NavBar horizontal">
-          <ButtonToolbar>
-            <DropdownButton bsStyle="link" title={<FontAwesome name="info-circle" size="2x" />} noCaret id="dropdown-no-caret" className="nav-icon no-padding">
-              <MenuItem eventKey="1">{words.faq[LN]}</MenuItem>
-              <MenuItem eventKey="2">{words.tc[LN]}</MenuItem>
-              <MenuItem eventKey="3">{words.contact[LN]}</MenuItem>
-            </DropdownButton>
+          <ButtonToolbar className="navbar-toolbar">
             <DropdownButton
               bsStyle="link"
-              title={<FontAwesome name="globe" size="2x" />}
+              title={<img src={staticImages.info} height="25" alt="info" className="top-bar-img" />}
               noCaret
               id="dropdown-no-caret"
               className="nav-icon no-padding"
-              ref={(c) => { this.languagePopover = c; }}
-              onMouseOver={() => { this.togglePopover('languagePopover', true); }}
-              onMouseLeave={() => { this.togglePopover('languagePopover', false); }}
             >
-              <MenuItem eventKey="1" onClick={() => { this.props.actions.setAppLanguage('en'); }}>language EN</MenuItem>
-              <MenuItem eventKey="2" onClick={() => { this.props.actions.setAppLanguage('ru'); }}>language RU</MenuItem>
+              <MenuItem eventKey="1" onClick={() => { browserHistory.push('/faq'); }}>
+                {words.faq[LN]}
+              </MenuItem>
+              <MenuItem eventKey="2" onClick={() => { browserHistory.push('/terms-and-conditions'); }}>
+                {words.tc[LN]}
+              </MenuItem>
+              <MenuItem eventKey="3" onClick={() => { browserHistory.push('/contact'); }}>
+                {words.contact[LN]}
+              </MenuItem>
             </DropdownButton>
+            <OverlayTrigger
+              trigger={['hover', 'focus']}
+              placement="bottom"
+              overlay={languagePopover}
+              delayShow={0}
+              delayHide={0}
+            >
+              <DropdownButton
+                bsStyle="link"
+                title={<img src={staticImages.world} height="25" alt="info" className="top-bar-img" />}
+                noCaret
+                id="dropdown-no-caret"
+                className="nav-icon no-padding"
+              >
+                <MenuItem
+                  eventKey="1"
+                  onClick={() => { this.props.actions.setAppLanguage('en'); }}
+                >language EN</MenuItem>
+                <MenuItem
+                  eventKey="2"
+                  onClick={() => { this.props.actions.setAppLanguage('ru'); }}
+                >language RU</MenuItem>
+                <MenuItem
+                  eventKey="3"
+                  onClick={() => { this.props.actions.setAppLanguage('dan'); }}
+                >language DA</MenuItem>
+              </DropdownButton>
+            </OverlayTrigger>
           </ButtonToolbar>
 
-          {this.renderNavIcon('homePopover', 'home', '/', { marginLeft: 'auto' })}
-          {this.renderNavIcon('libraryPopover', 'book', '/library')}
-          {this.renderNavIcon('settingsPopover', 'cog', '/settings')}
-          {this.renderNavIcon('loginPopover', 'unlock-alt', '/component1')}
-          {this.renderNavIcon('userProfilePopover', 'user', '/component2')}
-          {this.renderNavIcon('shoppingCartPopover', 'shopping-cart', '/component2')}
+          {this.renderNavIcon(homePopover, 'home', '/', { marginLeft: 'auto' })}
+          {this.renderNavIcon(libraryPopover, 'book', '/library')}
+          {this.renderNavIcon(settingsPopover, 'cog', '/settings')}
+
+          <OverlayTrigger
+            trigger={['hover', 'focus']}
+            placement="bottom"
+            overlay={loginPopover}
+            delayShow={0}
+            delayHide={0}
+          >
+            <span className="nav-icon pointer">
+              <Image
+                src={this.props.auth && this.props.auth.session ? staticImages.unlockAlt : staticImages.lockAlt}
+                height="25"
+                onClick={() => {
+                  this.setState({
+                    showLoginModal: !this.state.showLoginModal
+                  });
+                }}
+                alt="login"
+                className="top-bar-img"
+              />
+            </span>
+          </OverlayTrigger>
+          {this.renderNavIcon(userProfilePopover, 'user', '/profile')}
+          {this.renderNavIcon(shoppingCartPopover, 'shoppingCart', '/component2')}
         </Row>
         <Row>
-          {this.props.children}
+          <SessionService>
+            {this.props.children}
+          </SessionService>
         </Row>
-        {this.renderOverlay('languagePopover')}
-        {this.renderOverlay('homePopover')}
-        {this.renderOverlay('libraryPopover')}
-        {this.renderOverlay('settingsPopover')}
-        {this.renderOverlay('loginPopover')}
-        {this.renderOverlay('userProfilePopover')}
-        {this.renderOverlay('shoppingCartPopover')}
-
+        <LoginModal show={this.state.showLoginModal} onHide={this.closeLoginModal} />
       </Grid>
     );
   }
@@ -137,20 +231,23 @@ class App extends React.Component {
 
 App.propTypes = {
   actions: React.PropTypes.shape({
-    increment: React.PropTypes.func,
-    addRegisterData: React.PropTypes.func,
+    userAuth: React.PropTypes.func,
     setAppLanguage: React.PropTypes.func
   }),
   children: React.PropTypes.shape(),
   config: React.PropTypes.shape({
     appLanguage: React.PropTypes.string.isRequred
+  }),
+  auth: React.PropTypes.shape({
+    session: React.PropTypes.string
   })
 
 };
 App.defaultProps = {
   actions: {},
   children: {},
-  config: { appLanguage: 'en' }
+  config: { appLanguage: 'en' },
+  auth: { session: '' }
 };
 
 export default App;

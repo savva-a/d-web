@@ -1,0 +1,12 @@
+.faq-page {
+  margin: 0 0 auto 0;
+  overflow: auto;
+  .faq-question {
+    color: #a7a7a7;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  .faq-answer {
+    margin-bottom: 15px
+  }
+}

@@ -1,0 +1,56 @@
+$profile-header-height: 100px;
+
+.profile-page {
+  flex-direction: column;
+  margin: 0 0 auto 0;
+  overflow: auto;
+  display: flex;
+  height: 100%;
+  .profile-header {
+    background-color: #F2F3F5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: $profile-header-height;
+    font-size: 40px;
+    color: #bbbbbb;
+    text-transform: uppercase;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+  }
+  .profile-body {
+    background-color: #DCDEDE;
+    height: calc(100% - #{$profile-header-height});
+    padding-top: 40px;
+  }
+}
+.profile-input-label {
+  line-height: 34px;
+}
+.profile-extend-label {
+  line-height: 45px;
+}
+.profile-password-advice {
+  color: #96a093;
+}
+.upload-btn {
+  background-color: #2EA003;
+  margin: 5px 15px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+  text-transform: uppercase;
+  font-size: 18px;
+  margin-right: 10px;
+  height: 35px;
+  padding: 0 15px;
+}
+.upload-btn-disabled {
+  background-color: #96a093;
+}
+
+.profile-save-btn {
+  border-radius: 50%;
+  cursor: pointer;
+}
